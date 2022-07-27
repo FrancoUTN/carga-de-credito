@@ -61,19 +61,15 @@ export default function PrincipalScreen() {
 
     if (usuario.perfil !== 'admin') {
       let clave = '';
-      let aumento = 0;
       
       if (codigoQR === '8c95def646b6127282ed50454b73240300dccabc') {
         clave = 'diez';
-        aumento = 10;
       }
       else if (codigoQR == 'ae338e4e0cbb4e4bcffaf9ce5b409feb8edd5172') {
         clave = 'cincuenta';
-        aumento = 50;
       }
       else if (codigoQR === '2786f4877b9091dcad7f35751bfcf5d5ea712b2f') {
         clave = 'cien';
-        aumento = 100;
       }
 
       if (clave !== '') {
@@ -105,6 +101,46 @@ export default function PrincipalScreen() {
         setCargando(false);
       }
     }
+    else if (usuario.perfil == 'admin') {
+      let clave = '';
+      
+      if (codigoQR === '8c95def646b6127282ed50454b73240300dccabc') {
+        clave = 'diez';
+      }
+      else if (codigoQR == 'ae338e4e0cbb4e4bcffaf9ce5b409feb8edd5172') {
+        clave = 'cincuenta';
+      }
+      else if (codigoQR === '2786f4877b9091dcad7f35751bfcf5d5ea712b2f') {
+        clave = 'cien';
+      }
+
+      if (clave !== '') {
+        if (!usuario.creditos || !usuario.creditos[clave]) {
+          setError('');
+
+          await updateDoc(userRef, {
+            [`creditos.${clave}`]: 2
+          });
+        }
+        else {
+          if (usuario.creditos[clave] < 2) {
+            setError('');
+
+            await updateDoc(userRef, {
+              [`creditos.${clave}`]: 2
+            });
+          }
+          else {
+            setError('Error: Código ya utilizado 2 veces.');
+            setCargando(false);
+          }
+        }
+      }
+      else {
+        setError('Error: QR inválido.');
+        setCargando(false);
+      }
+    }
   };
 
   if (hasPermission === null) {
@@ -115,10 +151,13 @@ export default function PrincipalScreen() {
   }
 
   function escanearPressHandler() {
+    setError('');
     setScanned(false);
   }
 
   async function anularPressHandler() {
+    setError('');
+
     await updateDoc(userRef, {
       creditos: {}
     });
@@ -143,7 +182,7 @@ export default function PrincipalScreen() {
           cargando ?
           <ActivityIndicator
             size="large"
-            color={Colors.primary800}
+            color="white"
           />
           :
           <Text style={styles.creditoTexto}>
