@@ -1,3 +1,3 @@
 import { collection, getFirestore } from 'firebase/firestore';
 
-export default collection(getFirestore(), 'mensajes');
+export default collection(getFirestore(), 'usuarios');
