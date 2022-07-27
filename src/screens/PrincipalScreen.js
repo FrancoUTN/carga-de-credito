@@ -78,21 +78,21 @@ export default function PrincipalScreen() {
 
       if (clave !== '') {
         if (!usuario.creditos || !usuario.creditos[clave]) {
+          setError('');
+
           await updateDoc(userRef, {
             [`creditos.${clave}`]: 1
           });
-
-          // setCredito(creditoAnterior => creditoAnterior + aumento);
         }
         else {
           const vecesCargado = usuario.creditos[clave];
 
           if (vecesCargado < 1 || !vecesCargado) {
+            setError('');
+
             await updateDoc(userRef, {
               [`creditos.${clave}`]: 1
             });
-
-            // setCredito(creditoAnterior => creditoAnterior + aumento);
           }
           else {
             setError('Error: Código ya utilizado.');
@@ -127,17 +127,17 @@ export default function PrincipalScreen() {
   return (
     <View style={styles.container}>
 
-      <View style={styles.botonContainer}>
+      <View style={styles.anularContainer}>
         <Button
           onPress={anularPressHandler}
           title="Anular crédito"
-          color="#FF0000"            
+          color="#FF0000"
         />
       </View>
 
       <View style={styles.creditoContainer}>
         <Text style={styles.creditoTitulo}>
-          Crédito:
+          Tu crédito:
         </Text>
         {
           cargando ?
@@ -162,7 +162,7 @@ export default function PrincipalScreen() {
         <Button
           onPress={escanearPressHandler}
           title="Escanear QR"
-          color="#841584"
+          color={Colors.primary800}
         >
         </Button>
       </View>
@@ -192,7 +192,8 @@ const styles = StyleSheet.create({
   creditoContainer: {
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    backgroundColor: '#FFF9FB',
+    // backgroundColor: '#FFF9FB',
+    backgroundColor: Colors.primary800,
     borderRadius: 5,
     flex: 2
   },
@@ -202,23 +203,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   errorContainer: {
-    backgroundColor: Colors.error100,
+    // backgroundColor: Colors.error100,
     justifyContent: 'center',
     alignItems: 'center',
     flex: 0.5,
     borderRadius: 5,
     margin: 20
   },
+  anularContainer: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
   errorTexto: {
-    color: 'white',
+    color: Colors.error500,
     fontSize: 18
   },
   creditoTexto: {
-    color: Colors.primary800,
+    // color: Colors.primary800,
+    color: 'white',
     fontSize: 54
   },
   creditoTitulo: {
     color: Colors.primary800,
+    color: 'white',
     fontSize: 40
   }
 
