@@ -19,8 +19,7 @@ export default function PrincipalScreen() {
   const [scanned, setScanned] = useState(true);
   const [credito, setCredito] = useState(0);
   const [cargando, setCargando] = useState(true);
-
-  let error = <View></View>;
+  const [error, setError] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -97,15 +96,13 @@ export default function PrincipalScreen() {
             // setCredito(creditoAnterior => creditoAnterior + aumento);
           }
           else {
-            console.log("No podés cargar más.");
-            
+            setError('Error: Código ya utilizado.');
             setCargando(false);
           }
         }
       }
       else {
-        console.log("QR inválido.");
-        error = 
+        setError('Error: QR inválido.');
         setCargando(false);
       }
     }
@@ -124,9 +121,18 @@ export default function PrincipalScreen() {
 
   return (
     <View style={styles.container}>
+
+      <View style={styles.botonContainer}>
+        <Button
+          onPress={() => {}}
+        >
+            Anular crédito
+        </Button>
+      </View>
+
       <View style={styles.creditoContainer}>
-        <Text>
-          Crédito
+        <Text style={styles.creditoTitulo}>
+          Crédito:
         </Text>
         {
           cargando ?
@@ -135,22 +141,26 @@ export default function PrincipalScreen() {
             color={Colors.primary800}
           />
           :
-          <Text>
+          <Text style={styles.creditoTexto}>
             {credito}
           </Text>
         }
       </View>
-      <View>
-        
+
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorTexto}>
+          { error }        
+        </Text>
       </View>
+
       <View style={styles.botonContainer}>
         <Button
-          color={{'backgroundColor': Colors.pps4a}}
           onPress={escanearPressHandler}
         >
             Escanear QR
         </Button>
       </View>
+
       {
         !scanned &&
         <BarCodeScanner
@@ -159,7 +169,7 @@ export default function PrincipalScreen() {
           // style={StyleSheet.escaner}
         />
       }
-      {/* {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />} */}
+      
     </View>
   );
 }
@@ -170,13 +180,41 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   },
   creditoContainer: {
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    // backgroundColor: Colors.secondary300,
+    backgroundColor: '#FFF9FB',
+    margin: 20,
+    borderRadius: 5,
+    flex: 3
   },
   botonContainer: {
-    padding: 20
-  },
-  escaner: {
+    padding: 20,
     flex: 1
+  },
+  // escaner: {
+  //   flex: 1
+  // },
+  errorContainer: {
+    margin: 20,
+    padding: 10,
+    backgroundColor: Colors.error100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    borderRadius: 5,
+  },
+  errorTexto: {
+    color: 'white',
+    fontSize: 18
+  },
+  creditoTexto: {
+    color: Colors.primary800,
+    fontSize: 54
+  },
+  creditoTitulo: {
+    color: Colors.primary800,
+    fontSize: 40
   }
+
 }); 
