@@ -9,6 +9,7 @@ import { Animated, StyleSheet, Text, View} from "react-native";
 import { Colors } from './src/constants/styles';
 import LoginScreen from './src/screens/LoginScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
+import PrincipalScreen from './src/screens/PrincipalScreen';
 import AuthContextProvider, { AuthContext } from './src/store/auth-context';
 import IconButton from './src/components/ui/IconButton';
 import AulaScreen from './src/screens/AulaScreen';
@@ -48,6 +49,20 @@ function AuthenticatedStack() {
         contentStyle: { backgroundColor: Colors.primary100 },
       }}
     >
+      <Stack.Screen
+        name="Principal"
+        component={PrincipalScreen}
+        options={{
+          headerRight: ({ tintColor }) => (
+            <IconButton
+              icon="exit"
+              color={tintColor}
+              size={24}
+              onPress={authCtx.logout}
+            />
+          ),
+        }}
+      />
       <Stack.Screen
         name="Pasillo"
         component={WelcomeScreen}
@@ -111,7 +126,7 @@ function AnimatedSplashScreen({ children, image }) {
     try {
       setTimeout(() => SplashScreen.hideAsync(), 300);
     } catch (e) {
-      
+
     } finally {
       setAppReady(true);
     }

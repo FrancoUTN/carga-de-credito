@@ -15,27 +15,18 @@ function WelcomeScreen(props) {
     });
   }
 
-  function pps4aHandler() {
+  function escanearPressHandler() {
     props.navigation.navigate("Aula", {'division': 'PPS-4A'});
   }
 
-  function pps4bHandler() {
-    props.navigation.navigate("Aula", {'division': 'PPS-4B'});
-  }
 
   return (
     <View style={styles.rootContainer}>
       <GiantButton
         color={{'backgroundColor': Colors.pps4a}}
-        onPress={pps4aHandler}  
+        onPress={pps4aHandler}
       >
-        PPS-4A
-      </GiantButton>
-      <GiantButton
-        color={{'backgroundColor': Colors.pps4b}}
-        onPress={pps4bHandler}  
-      >
-        PPS-4B
+          Escanear QR
       </GiantButton>
     </View>
   );
