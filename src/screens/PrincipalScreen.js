@@ -4,7 +4,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 
 import Button from '../components/ui/Button';
 import { Colors } from '../constants/styles';
-import { getFirestore, getDoc, getDocs, where, doc, get, setDoc, updateDoc } from 'firebase/firestore';
+import { getFirestore, getDoc, getDocs, where, doc, get, setDoc, updateDoc, onSnapshot } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 
@@ -18,6 +18,7 @@ export default function PrincipalScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(true);
   const [credito, setCredito] = useState(0);
+  const [cargado, setCargando] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -26,10 +27,30 @@ export default function PrincipalScreen() {
     })();
   }, []);
   
+  // useEffect(() => {
+  //   (async () => {
+  //     const userSnap = await getDoc(userRef);
+  //     const usuario = userSnap.data();
+  //     const creditos = usuario.creditos;
+
+  //     if (creditos) {
+  //       let acumulador = 0;
+
+  //       acumulador += creditos['diez'] ? creditos['diez'] * 10 : 0;
+  //       acumulador += creditos['cincuenta'] ? creditos['cincuenta'] * 50 : 0;
+  //       acumulador += creditos['cien'] ? creditos['cien'] * 100 : 0;
+
+  //       setCredito(acumulador);
+  //     }
+  //   })();
+  // }, [])
+  
   useEffect(() => {
-    (async () => {
-      const userSnap = await getDoc(userRef);
-      const usuario = userSnap.data();
+    const q = getDoc(userRef);
+
+    const unsubscribe = onSnapshot(userRef, doc => {
+      const usuario = doc.data();
+
       const creditos = usuario.creditos;
 
       if (creditos) {
@@ -41,8 +62,10 @@ export default function PrincipalScreen() {
 
         setCredito(acumulador);
       }
-    })();
-  }, []);
+    });
+
+    return unsubscribe;
+  }, [])
 
   const handleBarCodeScanned = async ({ type, data }) => {
     setScanned(true);
@@ -75,7 +98,7 @@ export default function PrincipalScreen() {
             [`creditos.${clave}`]: 1
           });
 
-          setCredito(creditoAnterior => creditoAnterior + aumento);
+          // setCredito(creditoAnterior => creditoAnterior + aumento);
         }
         else {
           const vecesCargado = usuario.creditos[clave];
@@ -85,7 +108,7 @@ export default function PrincipalScreen() {
               [`creditos.${clave}`]: 1
             });
 
-            setCredito(creditoAnterior => creditoAnterior + aumento);
+            // setCredito(creditoAnterior => creditoAnterior + aumento);
           }
           else {
             console.log("No podés cargar más.")
