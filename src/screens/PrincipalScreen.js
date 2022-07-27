@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
 import Button from '../components/ui/Button';
@@ -18,7 +18,9 @@ export default function PrincipalScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(true);
   const [credito, setCredito] = useState(0);
-  const [cargado, setCargando] = useState(true);
+  const [cargando, setCargando] = useState(true);
+
+  let error = <View></View>;
 
   useEffect(() => {
     (async () => {
@@ -26,25 +28,7 @@ export default function PrincipalScreen() {
       setHasPermission(status === 'granted');
     })();
   }, []);
-  
-  // useEffect(() => {
-  //   (async () => {
-  //     const userSnap = await getDoc(userRef);
-  //     const usuario = userSnap.data();
-  //     const creditos = usuario.creditos;
-
-  //     if (creditos) {
-  //       let acumulador = 0;
-
-  //       acumulador += creditos['diez'] ? creditos['diez'] * 10 : 0;
-  //       acumulador += creditos['cincuenta'] ? creditos['cincuenta'] * 50 : 0;
-  //       acumulador += creditos['cien'] ? creditos['cien'] * 100 : 0;
-
-  //       setCredito(acumulador);
-  //     }
-  //   })();
-  // }, [])
-  
+    
   useEffect(() => {
     const q = getDoc(userRef);
 
@@ -62,6 +46,7 @@ export default function PrincipalScreen() {
 
         setCredito(acumulador);
       }
+      setCargando(false);
     });
 
     return unsubscribe;
@@ -69,6 +54,7 @@ export default function PrincipalScreen() {
 
   const handleBarCodeScanned = async ({ type, data }) => {
     setScanned(true);
+    setCargando(true);
     
     const codigoQR = data.trim();
 
@@ -111,12 +97,16 @@ export default function PrincipalScreen() {
             // setCredito(creditoAnterior => creditoAnterior + aumento);
           }
           else {
-            console.log("No podés cargar más.")
+            console.log("No podés cargar más.");
+            
+            setCargando(false);
           }
         }
       }
       else {
         console.log("QR inválido.");
+        error = 
+        setCargando(false);
       }
     }
   };
@@ -138,9 +128,20 @@ export default function PrincipalScreen() {
         <Text>
           Crédito
         </Text>
-        <Text>
-          {credito}
-        </Text>
+        {
+          cargando ?
+          <ActivityIndicator
+            size="large"
+            color={Colors.primary800}
+          />
+          :
+          <Text>
+            {credito}
+          </Text>
+        }
+      </View>
+      <View>
+        
       </View>
       <View style={styles.botonContainer}>
         <Button
