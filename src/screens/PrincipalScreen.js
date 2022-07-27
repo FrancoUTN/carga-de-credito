@@ -119,15 +119,17 @@ export default function PrincipalScreen() {
           setError('');
 
           await updateDoc(userRef, {
-            [`creditos.${clave}`]: 2
+            [`creditos.${clave}`]: 1
           });
         }
         else {
-          if (usuario.creditos[clave] < 2) {
+          const cantidad = usuario.creditos[clave];
+
+          if (cantidad < 2) {
             setError('');
 
             await updateDoc(userRef, {
-              [`creditos.${clave}`]: 2
+              [`creditos.${clave}`]: cantidad + 1
             });
           }
           else {
