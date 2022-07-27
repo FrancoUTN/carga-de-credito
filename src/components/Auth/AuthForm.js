@@ -47,6 +47,16 @@ function AuthForm({ onSubmit, credentialsInvalid }) {
     setEnteredPassword('333333');
   }
 
+  function accesoAnonimoHandler() {
+    setEnteredEmail('anonimo@anonimo.com');
+    setEnteredPassword('444444');
+  }
+
+  function accesoTesterHandler() {
+    setEnteredEmail('tester@tester.com');
+    setEnteredPassword('555555');
+  }
+
   return (
     <View style={styles.form}>
       <View>
@@ -83,6 +93,16 @@ function AuthForm({ onSubmit, credentialsInvalid }) {
         <View style={styles.buttons}>
           <FlatButton onPress={accesoUsuarioHandler} >
             Acceso usuario
+          </FlatButton>
+        </View>        
+        <View style={styles.buttons}>
+          <FlatButton onPress={accesoUsuarioHandler} >
+            Acceso anónimo
+          </FlatButton>
+        </View>
+        <View style={styles.buttons}>
+          <FlatButton onPress={accesoUsuarioHandler} >
+            Acceso tester
           </FlatButton>
         </View>
 

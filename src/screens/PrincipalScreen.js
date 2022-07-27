@@ -4,19 +4,43 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 
 import Button from '../components/ui/Button';
 import { Colors } from '../constants/styles';
-import { getFirestore, getDoc, getDocs, where, doc, get } from 'firebase/firestore';
+import { getFirestore, getDoc, getDocs, where, doc, get, setDoc, updateDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
+
 export default function PrincipalScreen() {
+  const db = getFirestore();
+  
   const auth = getAuth();
   const uid = auth.currentUser.uid;
+  const userRef = doc(db, 'usuarios', uid);
+
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [credito, setCredito] = useState(0);
 
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
+    })();
+  }, []);
+  
+  useEffect(() => {
+    (async () => {
+      const userSnap = await getDoc(userRef);
+      const usuario = userSnap.data();
+      const creditos = usuario.creditos;
+
+      if (creditos) {
+        let acumulador = 0;
+
+        acumulador += creditos['diez'] ? creditos['diez'] * 10 : 0;
+        acumulador += creditos['cincuenta'] ? creditos['cincuenta'] * 50 : 0;
+        acumulador += creditos['cien'] ? creditos['cien'] * 100 : 0;
+
+        setCredito(acumulador);
+      }
     })();
   }, []);
 
@@ -35,45 +59,55 @@ export default function PrincipalScreen() {
 
 
   async function escanearPressHandler() {
-    // const qrSimulado = '8c95def646b6127282ed50454b73240300dccabc';
-    const qrSimulado = 'ae338e4e0cbb4e4bcffaf9ce5b409feb8edd5172';
+    const qrSimulado = '8c95def646b6127282ed50454b73240300dccabc';
+    // const qrSimulado = 'ae338e4e0cbb4e4bcffaf9ce5b409feb8edd5172';
+    // const qrSimulado = '2786f4877b9091dcad7f35751bfcf5d5ea712b2f';
 
-    // console.log(uid);
-    const db = getFirestore();
-    const userRef = doc(db, 'usuarios', uid);
+    // const db = getFirestore();
+    // const userRef = doc(db, 'usuarios', uid);
     const userSnap = await getDoc(userRef);
-
-    console.log(userSnap.data());
-
-
     const usuario = userSnap.data();
 
     if (usuario.perfil !== 'admin') {
-      const creditos = usuario.creditos;
-
       let clave = '';
-
+      let aumento = 0;
       
       if (qrSimulado === '8c95def646b6127282ed50454b73240300dccabc') {
         clave = 'diez';
+        aumento = 10;
       }
       else if (qrSimulado === 'ae338e4e0cbb4e4bcffaf9ce5b409feb8edd5172') {
         clave = 'cincuenta';
+        aumento = 50;
+      }
+      else if (qrSimulado === '2786f4877b9091dcad7f35751bfcf5d5ea712b2f') {
+        clave = 'cien';
+        aumento = 100;
       }
 
-      console.log(creditos[clave]);
-      // console.log(creditos['diez']);
+      if (!usuario.creditos || !usuario.creditos[clave]) {
+        await updateDoc(userRef, {
+          [`creditos.${clave}`]: 1
+        });
+
+        setCredito(creditoAnterior => creditoAnterior + aumento);
+      }
+      else {
+        const vecesCargado = usuario.creditos[clave];
+
+        if (vecesCargado < 1 || !vecesCargado) {
+          await updateDoc(userRef, {
+            [`creditos.${clave}`]: 1
+          });
+
+          setCredito(creditoAnterior => creditoAnterior + aumento);
+        }
+        else {
+          console.log("No podés cargar más.")
+        }
+      }
     }
 
-    // const doc = await colRef.doc(uid).get();
-
-    // console.log(doc);
-
-    // const querySnapshot = await getDocs(colRef);
-
-    // querySnapshot.forEach((doc) => {
-    //   console.log(`${doc.id} => ${doc.data().creditos?.diez}`);
-    // });
   }
 
   return (
@@ -83,7 +117,7 @@ export default function PrincipalScreen() {
           Crédito
         </Text>
         <Text>
-          $150
+          {credito}
         </Text>
       </View>
       <View style={styles.botonContainer}>
