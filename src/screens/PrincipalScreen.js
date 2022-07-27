@@ -16,7 +16,7 @@ export default function PrincipalScreen() {
   const userRef = doc(db, 'usuarios', uid);
 
   const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
+  const [scanned, setScanned] = useState(true);
   const [credito, setCredito] = useState(0);
 
   useEffect(() => {
@@ -44,10 +44,58 @@ export default function PrincipalScreen() {
     })();
   }, []);
 
-  const handleBarCodeScanned = ({ type, data }) => {
+  const handleBarCodeScanned = async ({ type, data }) => {
     setScanned(true);
-    console.log(typeof(data));
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    
+    const codigoQR = data.trim();
+
+    const userSnap = await getDoc(userRef);
+    const usuario = userSnap.data();
+
+    if (usuario.perfil !== 'admin') {
+      let clave = '';
+      let aumento = 0;
+      
+      if (codigoQR === '8c95def646b6127282ed50454b73240300dccabc') {
+        clave = 'diez';
+        aumento = 10;
+      }
+      else if (codigoQR == 'ae338e4e0cbb4e4bcffaf9ce5b409feb8edd5172') {
+        clave = 'cincuenta';
+        aumento = 50;
+      }
+      else if (codigoQR === '2786f4877b9091dcad7f35751bfcf5d5ea712b2f') {
+        clave = 'cien';
+        aumento = 100;
+      }
+
+      if (clave !== '') {
+        if (!usuario.creditos || !usuario.creditos[clave]) {
+          await updateDoc(userRef, {
+            [`creditos.${clave}`]: 1
+          });
+
+          setCredito(creditoAnterior => creditoAnterior + aumento);
+        }
+        else {
+          const vecesCargado = usuario.creditos[clave];
+
+          if (vecesCargado < 1 || !vecesCargado) {
+            await updateDoc(userRef, {
+              [`creditos.${clave}`]: 1
+            });
+
+            setCredito(creditoAnterior => creditoAnterior + aumento);
+          }
+          else {
+            console.log("No podés cargar más.")
+          }
+        }
+      }
+      else {
+        console.log("QR inválido.");
+      }
+    }
   };
 
   if (hasPermission === null) {
@@ -57,57 +105,8 @@ export default function PrincipalScreen() {
     return <Text>No access to camera</Text>;
   }
 
-
-  async function escanearPressHandler() {
-    const qrSimulado = '8c95def646b6127282ed50454b73240300dccabc';
-    // const qrSimulado = 'ae338e4e0cbb4e4bcffaf9ce5b409feb8edd5172';
-    // const qrSimulado = '2786f4877b9091dcad7f35751bfcf5d5ea712b2f';
-
-    // const db = getFirestore();
-    // const userRef = doc(db, 'usuarios', uid);
-    const userSnap = await getDoc(userRef);
-    const usuario = userSnap.data();
-
-    if (usuario.perfil !== 'admin') {
-      let clave = '';
-      let aumento = 0;
-      
-      if (qrSimulado === '8c95def646b6127282ed50454b73240300dccabc') {
-        clave = 'diez';
-        aumento = 10;
-      }
-      else if (qrSimulado === 'ae338e4e0cbb4e4bcffaf9ce5b409feb8edd5172') {
-        clave = 'cincuenta';
-        aumento = 50;
-      }
-      else if (qrSimulado === '2786f4877b9091dcad7f35751bfcf5d5ea712b2f') {
-        clave = 'cien';
-        aumento = 100;
-      }
-
-      if (!usuario.creditos || !usuario.creditos[clave]) {
-        await updateDoc(userRef, {
-          [`creditos.${clave}`]: 1
-        });
-
-        setCredito(creditoAnterior => creditoAnterior + aumento);
-      }
-      else {
-        const vecesCargado = usuario.creditos[clave];
-
-        if (vecesCargado < 1 || !vecesCargado) {
-          await updateDoc(userRef, {
-            [`creditos.${clave}`]: 1
-          });
-
-          setCredito(creditoAnterior => creditoAnterior + aumento);
-        }
-        else {
-          console.log("No podés cargar más.")
-        }
-      }
-    }
-
+  function escanearPressHandler() {
+    setScanned(false);
   }
 
   return (
@@ -128,11 +127,15 @@ export default function PrincipalScreen() {
             Escanear QR
         </Button>
       </View>
-      {/* <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
-      />
-      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />} */}
+      {
+        !scanned &&
+        <BarCodeScanner
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+          style={StyleSheet.absoluteFillObject}
+          // style={StyleSheet.escaner}
+        />
+      }
+      {/* {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />} */}
     </View>
   );
 }
@@ -148,5 +151,8 @@ const styles = StyleSheet.create({
   },
   botonContainer: {
     padding: 20
+  },
+  escaner: {
+    flex: 1
   }
 }); 

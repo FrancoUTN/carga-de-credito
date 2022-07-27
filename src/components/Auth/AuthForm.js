@@ -96,12 +96,12 @@ function AuthForm({ onSubmit, credentialsInvalid }) {
           </FlatButton>
         </View>        
         <View style={styles.buttons}>
-          <FlatButton onPress={accesoUsuarioHandler} >
+          <FlatButton onPress={accesoAnonimoHandler} >
             Acceso anónimo
           </FlatButton>
         </View>
         <View style={styles.buttons}>
-          <FlatButton onPress={accesoUsuarioHandler} >
+          <FlatButton onPress={accesoTesterHandler} >
             Acceso tester
           </FlatButton>
         </View>
