@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
-import Button from '../components/ui/Button';
 import { Colors } from '../constants/styles';
-import { getFirestore, getDoc, getDocs, where, doc, get, setDoc, updateDoc, onSnapshot } from 'firebase/firestore';
+import { getFirestore, getDoc, doc, updateDoc, onSnapshot } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 
@@ -119,15 +118,21 @@ export default function PrincipalScreen() {
     setScanned(false);
   }
 
+  async function anularPressHandler() {
+    await updateDoc(userRef, {
+      creditos: {}
+    });
+  }
+
   return (
     <View style={styles.container}>
 
       <View style={styles.botonContainer}>
         <Button
-          onPress={() => {}}
-        >
-            Anular crédito
-        </Button>
+          onPress={anularPressHandler}
+          title="Anular crédito"
+          color="#FF0000"            
+        />
       </View>
 
       <View style={styles.creditoContainer}>
@@ -156,8 +161,9 @@ export default function PrincipalScreen() {
       <View style={styles.botonContainer}>
         <Button
           onPress={escanearPressHandler}
+          title="Escanear QR"
+          color="#841584"
         >
-            Escanear QR
         </Button>
       </View>
 
@@ -175,34 +181,33 @@ export default function PrincipalScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-around'
-  },
-  creditoContainer: {
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    // backgroundColor: Colors.secondary300,
-    backgroundColor: '#FFF9FB',
-    margin: 20,
-    borderRadius: 5,
-    flex: 3
-  },
-  botonContainer: {
-    padding: 20,
-    flex: 1
-  },
   // escaner: {
   //   flex: 1
   // },
+  container: {
+    flex: 1,
+    justifyContent: 'space-around',
+    padding: 30
+  },
+  creditoContainer: {
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    backgroundColor: '#FFF9FB',
+    borderRadius: 5,
+    flex: 2
+  },
+  botonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   errorContainer: {
-    margin: 20,
-    padding: 10,
     backgroundColor: Colors.error100,
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
+    flex: 0.5,
     borderRadius: 5,
+    margin: 20
   },
   errorTexto: {
     color: 'white',
