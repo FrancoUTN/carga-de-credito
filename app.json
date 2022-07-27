@@ -24,7 +24,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0000aa"
-      }
+      },
+      "package": "com.maxiterra.cargadecredito"
     }
   }
 }
