@@ -5,6 +5,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Colors } from '../constants/styles';
 import { getFirestore, getDoc, doc, updateDoc, onSnapshot } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import LoadingOverlay from '../components/ui/LoadingOverlay';
 
 
 export default function PrincipalScreen() {
@@ -146,10 +147,10 @@ export default function PrincipalScreen() {
   };
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    return <LoadingOverlay>Verificando permisos...</LoadingOverlay>;
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return <Text>Sin acceso a la cámara.</Text>;
   }
 
   function escanearPressHandler() {

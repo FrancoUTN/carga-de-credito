@@ -8,11 +8,9 @@ import { Animated, StyleSheet, Text, View} from "react-native";
 
 import { Colors } from './src/constants/styles';
 import LoginScreen from './src/screens/LoginScreen';
-import WelcomeScreen from './src/screens/WelcomeScreen';
 import PrincipalScreen from './src/screens/PrincipalScreen';
 import AuthContextProvider, { AuthContext } from './src/store/auth-context';
 import IconButton from './src/components/ui/IconButton';
-import AulaScreen from './src/screens/AulaScreen';
 
 // Inicializar App y Auth
 import './src/util/auth'
@@ -50,36 +48,8 @@ function AuthenticatedStack() {
       }}
     >
       <Stack.Screen
-        name="Principal"
+        name="Cuenta"
         component={PrincipalScreen}
-        options={{
-          headerRight: ({ tintColor }) => (
-            <IconButton
-              icon="exit"
-              color={tintColor}
-              size={24}
-              onPress={authCtx.logout}
-            />
-          ),
-        }}
-      />
-      <Stack.Screen
-        name="Pasillo"
-        component={WelcomeScreen}
-        options={{
-          headerRight: ({ tintColor }) => (
-            <IconButton
-              icon="exit"
-              color={tintColor}
-              size={24}
-              onPress={authCtx.logout}
-            />
-          ),
-        }}
-      />
-      <Stack.Screen
-        name="Aula"
-        component={AulaScreen}
         options={{
           headerRight: ({ tintColor }) => (
             <IconButton

@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react';
-import { Alert } from 'react-native';
 
 import AuthContent from '../components/Auth/AuthContent';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
@@ -19,16 +18,12 @@ function LoginScreen() {
       authCtx.authenticate(usuario.email);
     }
     catch (error) {
-      Alert.alert(
-        'Authentication failed!',
-        'Could not log you in. Please check your credentials or try again later!'
-      );
       setIsAuthenticating(false);
     }
   }
 
   if (isAuthenticating) {
-    return <LoadingOverlay message="Accediendo..." />;
+    return <LoadingOverlay message="Ingresando..." />;
   }
 
   return <AuthContent isLogin onAuthenticate={loginHandler} />;

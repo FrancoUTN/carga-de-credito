@@ -76,33 +76,33 @@ function AuthForm({ onSubmit, credentialsInvalid }) {
         />
         <View style={styles.buttons}>
           <Button onPress={submitHandler}>
-            Iniciar sesión
+            Ingresar a mi cuenta
           </Button>
         </View>
 
         <View style={styles.buttons}>
           <FlatButton onPress={accesoAdminHandler}>
-            Acceso admin
+            Soy admin
           </FlatButton>
         </View>
         <View style={styles.buttons}>
           <FlatButton onPress={accesoInvitadoHandler} >
-            Acceso invitado
+            Soy invitado
           </FlatButton>
         </View>
         <View style={styles.buttons}>
           <FlatButton onPress={accesoUsuarioHandler} >
-            Acceso usuario
+            Soy usuario
           </FlatButton>
         </View>        
         <View style={styles.buttons}>
           <FlatButton onPress={accesoAnonimoHandler} >
-            Acceso anónimo
+            Soy anónimo
           </FlatButton>
         </View>
         <View style={styles.buttons}>
           <FlatButton onPress={accesoTesterHandler} >
-            Acceso tester
+            Soy tester
           </FlatButton>
         </View>
 
