@@ -158,6 +158,10 @@ export default function PrincipalScreen() {
     setScanned(false);
   }
 
+  function cancelarEscanearPressHandler() {
+    setScanned(true);
+  }
+
   async function anularPressHandler() {
     setError('');
 
@@ -204,6 +208,11 @@ export default function PrincipalScreen() {
         <View style={styles.botonContainer}>
           <Pressable
             onPress={escanearPressHandler}
+            style={
+              ({pressed}) => {
+                return pressed && { opacity: 0.7 }
+              }
+            }
           >
             <View style={styles.boton}>
               <Image
@@ -220,11 +229,33 @@ export default function PrincipalScreen() {
 
       {
         !scanned &&
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={StyleSheet.absoluteFillObject}
-          // style={StyleSheet.escaner}
-        />
+        <>
+          {/* <View style={styles.escanerContainer}> */}
+            <BarCodeScanner
+              onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+              // style={StyleSheet.absoluteFillObject}
+              style={styles.escaner}
+            />
+          {/* </View> */}
+          {/* <View */}
+          <View style={styles.escanerContainer}>
+
+          </View>
+          <View style={styles.botonEscanerContainer}>
+            <Pressable
+              onPress={cancelarEscanearPressHandler}
+              style={
+                ({pressed}) => {
+                  return [styles.botonEscanerPressable , pressed && { opacity: 0.7 }]
+                }
+              }
+            >
+              <Text style={styles.botonEscaner}>
+                Cancelar
+              </Text>
+            </Pressable>
+          </View>
+        </>
       }
       
     </View>
@@ -232,13 +263,49 @@ export default function PrincipalScreen() {
 }
 
 const styles = StyleSheet.create({
-  // escaner: {
-  //   flex: 1
-  // },
+  escanerContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+
+    backgroundColor: 'black',
+  },
+  escaner: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+
+    zIndex: 1,
+  },
+  botonEscanerContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  botonEscanerPressable: {
+    flex: 1,
+    zIndex: 2,
+    // backgroundColor: Colors.primary500,
+  },
+  botonEscaner: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+
+    zIndex: 3,
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 22
+  },
   container: {
     flex: 1,
     justifyContent: 'space-around',
-    padding: 30
+    // padding: 30
   },
   creditoContainer: {
     justifyContent: 'space-evenly',
@@ -246,7 +313,8 @@ const styles = StyleSheet.create({
     // backgroundColor: '#FFF9FB',
     backgroundColor: Colors.primary800,
     borderRadius: 15,
-    flex: 2
+    flex: 2,
+    margin: 30
   },
   errorContainer: {
     // backgroundColor: Colors.error100,
@@ -260,6 +328,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
+    margin: 30
   },
   errorTexto: {
     color: Colors.error500,
@@ -284,11 +353,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.primary500,
     borderRadius: 15,
-    paddingVertical: 15
+    paddingVertical: 15,
   },
   botonContainerContainer: {
     flex: 1,
     paddingHorizontal: 50,
+    margin: 30
   },
   boton: {
     flexDirection: 'row',
@@ -299,6 +369,9 @@ const styles = StyleSheet.create({
     color: 'white',
     margin: 10,
     fontSize: 18
+  },
+  scannerContainer: {
+    flex: 0.5
   }
 
 }); 
