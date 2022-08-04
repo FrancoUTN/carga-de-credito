@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, ActivityIndicator, Button } from 'react-native';
+import { Text, View, StyleSheet, ActivityIndicator, Button, Pressable, Image } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
 import { Colors } from '../constants/styles';
@@ -189,7 +189,7 @@ export default function PrincipalScreen() {
           />
           :
           <Text style={styles.creditoTexto}>
-            {credito}
+            $ {credito}
           </Text>
         }
       </View>
@@ -200,13 +200,22 @@ export default function PrincipalScreen() {
         </Text>
       </View>
 
-      <View style={styles.botonContainer}>
-        <Button
-          onPress={escanearPressHandler}
-          title="Escanear QR"
-          color={Colors.primary800}
-        >
-        </Button>
+      <View style={styles.botonContainerContainer}>
+        <View style={styles.botonContainer}>
+          <Pressable
+            onPress={escanearPressHandler}
+          >
+            <View style={styles.boton}>
+              <Image
+                style={styles.imagenBoton}
+                source={require('../../assets/qr-code.png')}
+              />
+              <Text style={styles.textoBoton}>
+                Escanear QR
+              </Text>
+            </View>
+          </Pressable>
+        </View>
       </View>
 
       {
@@ -236,13 +245,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // backgroundColor: '#FFF9FB',
     backgroundColor: Colors.primary800,
-    borderRadius: 5,
+    borderRadius: 15,
     flex: 2
-  },
-  botonContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   errorContainer: {
     // backgroundColor: Colors.error100,
@@ -270,6 +274,31 @@ const styles = StyleSheet.create({
     color: Colors.primary800,
     color: 'white',
     fontSize: 40
+  },
+  imagenBoton: {
+    width: 35,
+    height: 35
+  },
+  botonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.primary500,
+    borderRadius: 15,
+    paddingVertical: 15
+  },
+  botonContainerContainer: {
+    flex: 1,
+    paddingHorizontal: 50,
+  },
+  boton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textoBoton: {
+    color: 'white',
+    margin: 10,
+    fontSize: 18
   }
 
 }); 
