@@ -1054,6 +1054,11 @@
     "@babel/helper-validator-identifier" "^7.18.6"
     to-fast-properties "^2.0.0"
 
+"@expo-google-fonts/monda@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/monda/-/monda-0.2.2.tgz#13828884180ece1cd715cad3e9e2721cb9a6e54b"
+  integrity sha512-O9V+P+sZ1J9GgvIcQ9wguoqrg5XMPz8nv7VcMrPIOGZx+ljA+4tY9KkAaRP85J390ZrWgOFKNyyZof1QVcPgig==
+
 "@expo/bunyan@4.0.0", "@expo/bunyan@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@expo/bunyan/-/bunyan-4.0.0.tgz#be0c1de943c7987a9fbd309ea0b1acd605890c7b"

@@ -4,13 +4,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import Constants from "expo-constants";
 import * as SplashScreen from "expo-splash-screen";
-import { Animated, StyleSheet, Text, View} from "react-native";
+import { Animated, StyleSheet, View} from "react-native";
 
 import { Colors } from './src/constants/styles';
 import LoginScreen from './src/screens/LoginScreen';
 import PrincipalScreen from './src/screens/PrincipalScreen';
 import AuthContextProvider, { AuthContext } from './src/store/auth-context';
 import IconButton from './src/components/ui/IconButton';
+import { useFonts, Monda_400Regular, Monda_700Bold } from '@expo-google-fonts/monda';
 
 // Inicializar App y Auth
 import './src/util/auth'
@@ -32,7 +33,12 @@ function AuthStack() {
         contentStyle: { backgroundColor: Colors.primary100 },
       }}
     >
-      <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Ingreso' }}/>
+      <Stack.Screen name="Login" component={LoginScreen} options={{
+        title: 'Ingreso',
+        headerTitleStyle: {
+          fontFamily: 'Monda_700Bold'
+        }
+      }}/>
     </Stack.Navigator>
   );
 }
@@ -51,6 +57,9 @@ function AuthenticatedStack() {
         name="Cuenta"
         component={PrincipalScreen}
         options={{
+          headerTitleStyle: {
+            fontFamily: 'Monda_700Bold'
+          },
           headerRight: ({ tintColor }) => (
             <IconButton
               icon="exit"
@@ -88,6 +97,11 @@ export default function App() {
 }
 
 function AnimatedSplashScreen({ children, image }) {
+  let [fontsLoaded] = useFonts({
+      Monda_400Regular,
+      Monda_700Bold
+  });
+
   const animation = useMemo(() => new Animated.Value(1), []);
   const [isAppReady, setAppReady] = useState(false);
   const [isSplashAnimationComplete, setAnimationComplete] = useState(false);
@@ -115,7 +129,7 @@ function AnimatedSplashScreen({ children, image }) {
   return (
     <View style={{ flex: 1 }}>
       {isAppReady && children}
-      {!isSplashAnimationComplete && (
+      {!isSplashAnimationComplete && fontsLoaded && (
         <Animated.View
           pointerEvents="none"
           style={[

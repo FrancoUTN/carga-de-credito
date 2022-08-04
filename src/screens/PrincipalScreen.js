@@ -297,6 +297,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
 
+    fontFamily: 'Monda_400Regular',
     zIndex: 3,
     color: 'white',
     textAlign: 'center',
@@ -331,15 +332,18 @@ const styles = StyleSheet.create({
     margin: 30
   },
   errorTexto: {
+    fontFamily: 'Monda_400Regular',
     color: Colors.error500,
     fontSize: 18
   },
   creditoTexto: {
+    fontFamily: 'Monda_400Regular',
     // color: Colors.primary800,
     color: 'white',
     fontSize: 54
   },
   creditoTitulo: {
+    fontFamily: 'Monda_400Regular',
     color: Colors.primary800,
     color: 'white',
     fontSize: 40
@@ -366,6 +370,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textoBoton: {
+    fontFamily: 'Monda_400Regular',
     color: 'white',
     margin: 10,
     fontSize: 18
