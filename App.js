@@ -88,8 +88,8 @@ function Navigation() {
 export default function App() {
   return (
     <>
-      {/* <StatusBar style="light" /> */}
       <AnimatedSplashScreen image={require('./assets/splash.png')}>
+        <StatusBar style="light" />
         <MainScreen />
       </AnimatedSplashScreen>
     </>
