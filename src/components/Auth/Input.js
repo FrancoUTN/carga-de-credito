@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   label: {
-    color: 'white',
+    color: Colors.secondary,
     marginBottom: 4,
     fontFamily: 'Monda_400Regular'
   },
@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary100,
     borderRadius: 4,
     fontSize: 16,
-    fontFamily: 'Monda_400Regular'
+    fontFamily: 'Monda_400Regular',
+    color: Colors.primary500
   },
   inputInvalid: {
     backgroundColor: Colors.error100,

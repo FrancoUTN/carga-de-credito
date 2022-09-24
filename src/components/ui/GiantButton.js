@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Colors } from '../../constants/styles';
 
 export default function GiantButton({ children, onPress, color }) {
   return (
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   buttonText: {
-    color: 'white',
+    color: Colors.secondary,
     fontSize: 16,
     fontWeight: 'bold'
   },

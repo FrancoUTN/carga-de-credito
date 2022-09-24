@@ -1,12 +1,10 @@
 export const Colors = {
-  primary100: '#81D2C7',
-  // primary500: '#197BBD',
-  primary800: '#197BBD',
-  primary500: '#0000CC',
-  // primary800: '#0000CC',
-  secondary300: '#E9C46A',
+  primary100: '#111344',
+  primary500: '#FFFFFF',
+  // primary800: '#8F5C38',
+  primary800: '#FF7F11',
+  secondary: '#000000',
+
   error100: '#E07B4D',
-  error500: '#D63230',
-  pps4a: '#5CF64A',
-  pps4b: '#023618',
+  error500: '#D63230'
 }
