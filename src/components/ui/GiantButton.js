@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   buttonText: {
-    color: Colors.secondary,
+    color: Colors.muyOscuro,
     fontSize: 16,
     fontWeight: 'bold'
   },

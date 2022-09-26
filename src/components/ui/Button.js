@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     paddingVertical: 6,
     paddingHorizontal: 12,
-    backgroundColor: Colors.primary800,
+    backgroundColor: Colors.oscuro,
     elevation: 2,
     shadowColor: 'black',
     shadowOffset: { width: 1, height: 1 },
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: 'center',
-    color: Colors.primary500,
+    color: Colors.muyClaro,
     fontSize: 16,
     fontFamily: 'Monda_700Bold'
   },

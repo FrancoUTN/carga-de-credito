@@ -28,9 +28,9 @@ function AuthStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: Colors.primary500 },
-        headerTintColor: Colors.secondary,
-        contentStyle: { backgroundColor: Colors.primary100 },
+        headerStyle: { backgroundColor: Colors.muyClaro },
+        headerTintColor: Colors.muyOscuro,
+        contentStyle: { backgroundColor: Colors.claro },
       }}
     >
       <Stack.Screen name="Login" component={LoginScreen} options={{
@@ -48,9 +48,9 @@ function AuthenticatedStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: Colors.primary500 },
-        headerTintColor: Colors.secondary,
-        contentStyle: { backgroundColor: Colors.primary100 },
+        headerStyle: { backgroundColor: Colors.muyClaro },
+        headerTintColor: Colors.muyOscuro,
+        contentStyle: { backgroundColor: Colors.claro },
       }}
     >
       <Stack.Screen
@@ -89,7 +89,7 @@ export default function App() {
   return (
     <>
       <AnimatedSplashScreen image={require('./assets/splash.png')}>
-        <StatusBar style="light" />
+        <StatusBar />
         <MainScreen />
       </AnimatedSplashScreen>
     </>

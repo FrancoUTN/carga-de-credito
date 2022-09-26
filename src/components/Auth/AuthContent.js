@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 32,
     padding: 16,
     borderRadius: 8,
-    backgroundColor: Colors.primary500,
+    backgroundColor: Colors.muyOscuro,
     elevation: 2,
     shadowColor: 'black',
     shadowOffset: { width: 1, height: 1 },

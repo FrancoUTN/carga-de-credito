@@ -189,7 +189,7 @@ export default function PrincipalScreen() {
           cargando ?
           <ActivityIndicator
             size="large"
-            color="white"
+            color={Colors.muyOscuro}
           />
           :
           <Text style={styles.creditoTexto}>
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
   botonEscanerPressable: {
     flex: 1,
     zIndex: 2,
-    // backgroundColor: Colors.primary500,
+    // backgroundColor: Colors.claro,
   },
   botonEscaner: {
     position: 'absolute',
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
 
     fontFamily: 'Monda_400Regular',
     zIndex: 3,
-    color: Colors.secondary,
+    color: Colors.muyOscuro,
     textAlign: 'center',
     fontSize: 22
   },
@@ -312,9 +312,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     // backgroundColor: '#FFF9FB',
-    backgroundColor: Colors.primary800,
+    backgroundColor: Colors.muyClaro,
     borderRadius: 15,
-    flex: 2,
+    flex: 2.5,
     margin: 30
   },
   errorContainer: {
@@ -323,30 +323,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 0.5,
     borderRadius: 5,
-    margin: 20
+    margin: 0
   },
   anularContainer: {
-    flex: 1,
+    flex: 0.5,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    margin: 30
+    margin: 30,
   },
   errorTexto: {
-    fontFamily: 'Monda_400Regular',
+    fontFamily: 'Monda_700Bold',
     color: Colors.error500,
     fontSize: 18
   },
   creditoTexto: {
     fontFamily: 'Monda_400Regular',
-    // color: Colors.primary800,
-    color: Colors.secondary,
-    fontSize: 54
+    // color: Colors.oscuro,
+    color: Colors.muyOscuro,
+    fontSize: 64
   },
   creditoTitulo: {
     fontFamily: 'Monda_400Regular',
-    color: Colors.primary800,
-    color: Colors.secondary,
-    fontSize: 40
+    color: Colors.muyOscuro,
+    fontSize: 50
   },
   imagenBoton: {
     width: 35,
@@ -355,7 +354,7 @@ const styles = StyleSheet.create({
   botonContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.secondary,
+    backgroundColor: Colors.muyOscuro,
     borderRadius: 15,
     paddingVertical: 15,
   },
@@ -371,7 +370,7 @@ const styles = StyleSheet.create({
   },
   textoBoton: {
     fontFamily: 'Monda_400Regular',
-    color: Colors.primary500,
+    color: Colors.muyClaro,
     margin: 10,
     fontSize: 18
   },
