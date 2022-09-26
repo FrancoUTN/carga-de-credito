@@ -315,7 +315,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.muyClaro,
     borderRadius: 15,
     flex: 2.5,
-    margin: 30
+    margin: 30,
+    elevation: 4,
   },
   errorContainer: {
     // backgroundColor: Colors.error100,
