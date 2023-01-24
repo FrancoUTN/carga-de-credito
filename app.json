@@ -2,7 +2,7 @@
   "expo": {
     "name": "carga-de-credito",
     "slug": "carga-de-credito",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -25,7 +25,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0000aa"
       },
-      "package": "com.maxiterra.cargadecredito"
+      "package": "com.cfrancodev.cargadecredito"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a01813d4-b4a1-49db-b70e-867e5904e425"
+      }
     }
   }
 }
